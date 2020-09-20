@@ -21,4 +21,13 @@ class Feed(models.Model):
     title = models.CharField(max_length=300)
     date = models.DateTimeField(auto_now_add=True)  
     photo = models.ImageField()
-    
+
+class QuestList(models.Model):
+    uid = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    #qid = models.ForeignKey(Quest.Quest, on_delete = models.CASCADE))
+    STATE = (
+        ('TODO' , 'Normal'),
+        ('DOING' , 'Dormant'),
+        ('DONE', 'Leaved'),
+    )
+    state =  models.CharField(max_length=10, choices=STATE, default='TODO')

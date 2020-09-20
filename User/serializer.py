@@ -1,4 +1,4 @@
-from User.models import MgmtUser,Feed
+from User.models import MgmtUser,Feed,QuestList
 from rest_framework import serializers
 
 class MgmtUserSerializer(serializers.ModelSerializer):
@@ -24,3 +24,8 @@ class FeedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feed
         fields = '__all__'
+
+class QuestListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestList
+        fields= '__all__'

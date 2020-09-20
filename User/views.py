@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializer import MgmtUserSerializer,FeedSerializer
-from .models import MgmtUser,Feed
+from .serializer import MgmtUserSerializer,FeedSerializer,QuestListSerializer
+from .models import MgmtUser,Feed,QuestList
 
 class MgmtUserViewSet(viewsets.ModelViewSet):
     queryset = MgmtUser.objects.all()
@@ -14,4 +14,8 @@ class FeedViewSet(viewsets.ModelViewSet):
     
     def perform_create(self,serializer):
         serializer.save(uid = self.request.user)
-        
+
+class QuestListViewSet(viewsets.ModelViewSet):
+    queryset = QuestList.objects.all()
+    serializer_class = QuestListSerializer
+    
