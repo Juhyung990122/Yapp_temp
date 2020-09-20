@@ -17,3 +17,4 @@ pip install -r requirements.txt
 **들어갔더니 404뜬다고 당황하지마십쇼..**
 * User - http://127.0.0.1:8000/mgmtuser
 * Feed - http://127.0.0.1:8000/feed
+* QuestList - http://127.0.0.1:8000/questlist
