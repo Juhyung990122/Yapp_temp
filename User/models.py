@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User,AbstractUser
 from django.contrib import auth
 from django.conf import settings
+from Quest.models import Quest
 
 
 class MgmtUser(AbstractUser):
@@ -24,10 +25,10 @@ class Feed(models.Model):
 
 class QuestList(models.Model):
     uid = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
-    #qid = models.ForeignKey(Quest.Quest, on_delete = models.CASCADE))
+    qid = models.ForeignKey(Quest, on_delete = models.CASCADE)
     STATE = (
-        ('TODO' , 'Normal'),
-        ('DOING' , 'Dormant'),
-        ('DONE', 'Leaved'),
+        ('TODO' , 'todo'),
+        ('DOING' , 'doing'),
+        ('DONE', 'done'),
     )
     state =  models.CharField(max_length=10, choices=STATE, default='TODO')
