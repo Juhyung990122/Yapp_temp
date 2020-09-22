@@ -21,4 +21,6 @@ pip install -r requirements.txt
 * Feed - http://127.0.0.1:8000/User/feed
 * QuestList - http://127.0.0.1:8000/User/questlist
 * Quest - http://127.0.0.1:8000/Quest/quest
-* Quest - http://127.0.0.1:8000/Planet/planet
+* Planet - http://127.0.0.1:8000/Planet/planet
+* Trashcan - http://127.0.0.1:8000/Ect/trashcan
+* Token - http://127.0.0.1:8000/Ect/token

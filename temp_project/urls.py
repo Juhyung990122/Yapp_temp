@@ -7,5 +7,6 @@ urlpatterns = [
     path('User/',include('User.urls')),
     path('Quest/',include('Quest.urls')),
     path('Planet/',include('Planet.urls')),
+    path('Ect/',include('Ect.urls')),
     path('api-auth/',include('rest_framework.urls', namespace = 'rest_framework'))
 ]

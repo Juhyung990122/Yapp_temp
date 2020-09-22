@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'User',
     'Quest',
     'Planet',
+    'Ect',
     'rest_framework'
 ]
 
