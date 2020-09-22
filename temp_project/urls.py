@@ -6,5 +6,6 @@ urlpatterns = [
     path('yapptemp_admin/', admin.site.urls),
     path('User/',include('User.urls')),
     path('Quest/',include('Quest.urls')),
+    path('Planet/',include('Planet.urls')),
     path('api-auth/',include('rest_framework.urls', namespace = 'rest_framework'))
 ]

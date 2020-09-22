@@ -20,4 +20,5 @@ pip install -r requirements.txt
 * User - http://127.0.0.1:8000/User/mgmtuser
 * Feed - http://127.0.0.1:8000/User/feed
 * QuestList - http://127.0.0.1:8000/User/questlist
-* Quset - http://127.0.0.1:8000/Quest/quest
+* Quest - http://127.0.0.1:8000/Quest/quest
+* Quest - http://127.0.0.1:8000/Planet/planet

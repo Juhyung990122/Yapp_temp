@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'User',
     'Quest',
+    'Planet',
     'rest_framework'
 ]
 
