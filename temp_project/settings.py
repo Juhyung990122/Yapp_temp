@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'Quest',
     'Planet',
     'Ect',
-    'rest_framework'
+    'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
