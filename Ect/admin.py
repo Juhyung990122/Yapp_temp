@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Trashcan,Token
 
-# Register your models here.
+admin.site.register(Trashcan)
+admin.site.register(Token)
+
