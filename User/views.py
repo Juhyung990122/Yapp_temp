@@ -25,10 +25,12 @@ class QuestListViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 def calculate_rank(request, user_id):
     if request.method == 'GET':
-        user_info = MgmtUser.objects.get(pk = user_id)
-        serializer = MgmtUserSerializer(user_info)
-        try:
+        user_info = MgmtUser.objects.all()
+        serializer = MgmtUserSerializer(user_info, many = True)
+        for user_info in user_info:
             serializer.rank_save(user_info)
             return Response(serializer.data, status = status.HTTP_201_CREATED)
-        except:
-            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        
+        #except:
+        #    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        

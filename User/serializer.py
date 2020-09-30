@@ -24,11 +24,15 @@ class MgmtUserSerializer(serializers.ModelSerializer):
   
     def rank_save(self, user_info):
         qnum_list = QuestList.objects.values('uid').filter(state = "DONE")
-        #요청유저 퀘스트 숫자까지 불러옴!
-        rquser_data = qnum_list.filter(uid = user_info.id).count()
+        total = MgmtUser.objects.values('id').count()
+        total_dic = {}
+        for i in range(1,total+1):
+            rquser_data = qnum_list.filter(uid = i).count()
+            total_dic[i] = rquser_data
+        total_dic = sorted(total_dic.items(), key = lambda x : x[1], reverse=True)
         
-        #랭크 저장 코드
-        #user_info.rank = rank_value
+        
+        #user_info.rank = total_list.index(user_info)
         #user_info.save()
         
 

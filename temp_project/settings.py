@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import sys
 import hide_settings
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -45,6 +44,7 @@ INSTALLED_APPS = [
     'Ect',
     'rest_framework',
     'drf_yasg',
+    'fcm_django',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +123,5 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = "User.MgmtUser"
+
+PUSH_NOTIFICATIONS_SETTINGS = hide_settings.FCM_DJANGO_SETTINGS
