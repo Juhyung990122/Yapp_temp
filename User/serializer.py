@@ -22,18 +22,26 @@ class MgmtUserSerializer(serializers.ModelSerializer):
         model = MgmtUser
         fields = '__all__'
   
-    def rank_save(self, user_info):
-        qnum_list = QuestList.objects.values('uid').filter(state = "DONE")
-        total = MgmtUser.objects.values('id').count()
-        total_dic = {}
-        for i in range(1,total+1):
-            rquser_data = qnum_list.filter(uid = i).count()
-            total_dic[i] = rquser_data
-        total_dic = sorted(total_dic.items(), key = lambda x : x[1], reverse=True)
-        
-        
-        #user_info.rank = total_list.index(user_info)
-        #user_info.save()
+    def rank_save(self,user_info):
+    rank_list = []
+    #feed_count 갯수 기준으로 역순정렬
+    for user in user_info:
+        uid = user.id
+        feed_count = len(Feed.objects.filter(uid=uid))
+        rank_list.append([feed_count,uid])
+    rank_list = sorted(rank_list, key = lambda x : -x[0])
+    #feed_count를 rank값으로 변경 후 uid기준으로 순차정렬
+    user_idx = 0
+    for rank in range(1,len(rank_list)+1):
+        rank_list[user_idx][0] = rank
+        user_idx+=1
+    rank_list = sorted(rank_list, key = lambda x : x[1])
+    #uid별로 랭크값 갱신
+    user_idx = 0
+    for user in user_info:
+        user.rank = rank_list[user_idx][0]   
+        user_idx += 1
+        user.save()
         
 
 class FeedSerializer(serializers.ModelSerializer):
