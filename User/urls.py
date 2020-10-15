@@ -15,5 +15,5 @@ urlpatterns = [
     path('mgmtuser/',include(user_router.urls)),
     path('feed/',include(feed_router.urls)),
     path('questlist/',include(questlist_router.urls)),
-    path('rank_update/<int:user_id>',views.calculate_rank)
+    path('rank_update/',views.rank_update)
 ]

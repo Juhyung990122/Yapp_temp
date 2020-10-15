@@ -26,3 +26,4 @@ def rank_update(request):
     user_info = MgmtUser.objects.all()
     serializer = MgmtUserSerializer(user_info)
     serializer.rank_save(user_info)
+    return Response(serializer.data)

@@ -14,5 +14,4 @@ token_router.register('', FCMDeviceViewSet)
 urlpatterns = [
     path('trashcan/',include(trashcan_router.urls)),
     path('devices/',include(token_router.urls)),
-    #path('noti/',views.push_notification_create)
 ]
