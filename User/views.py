@@ -9,6 +9,13 @@ class MgmtUserViewSet(viewsets.ModelViewSet):
     queryset = MgmtUser.objects.all()
     serializer_class = MgmtUserSerializer
 
+    def update(self, request, *args, **kwargs): 
+        nickname = request.data.get('nickname') 
+        user_info  = self.get_object() #id로 들어온 객체 받아와서
+        user_info.nickname = nickname #닉네임 저장
+        self.perform_update(user_info) #객체 업데이트
+        return Response(status=status.HTTP_201_CREATED)
+
 class FeedViewSet(viewsets.ModelViewSet):
     queryset = Feed.objects.all()
     serializer_class = FeedSerializer
