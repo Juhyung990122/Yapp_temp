@@ -21,7 +21,7 @@ class FeedViewSet(viewsets.ModelViewSet):
     serializer_class = FeedSerializer
 
     def perform_create(self,serializer):
-        serializer.save(uid = self.request.user)
+        serializer.save(uid = self.request.email)
 
 class QuestListViewSet(viewsets.ModelViewSet):
     queryset = QuestList.objects.all()
