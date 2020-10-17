@@ -16,6 +16,14 @@ class MgmtUserViewSet(viewsets.ModelViewSet):
         self.perform_update(user_info) #객체 업데이트
         return Response(status=status.HTTP_201_CREATED)
 
+    #lastlogined 갱신(앱실행시 호출)
+    @action(detail=True, methods=['get'])
+    def update_lastlogined(self, request, pk, *args, **kwargs):
+        user_info = self.get_object()
+        user_info.lastlogined = datetime.datetime.now()
+        self.perform_update(user_info)
+        return Response(status=status.HTTP_201_CREATED)
+        
 class FeedViewSet(viewsets.ModelViewSet):
     queryset = Feed.objects.all()
     serializer_class = FeedSerializer
