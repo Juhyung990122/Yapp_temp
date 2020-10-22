@@ -51,6 +51,17 @@ class FeedViewSet(viewsets.ModelViewSet):
     queryset = Feed.objects.all()
     serializer_class = FeedSerializer
 
+    #신고기능_피드
+    @action(detail=True, methods=['get'])
+    def report_feed(self,request, pk, *args, **kwargs):
+        feed_info = self.get_object()
+        feed_info.report_feed_cnt += 1
+        self.perform_update(feed_info)
+
+        if feed_info.report_feed_cnt >= 3: 
+            self.perform_destroy(feed_info)
+            return Response(status = status.HTTP_202_ACCEPTED)
+
     def perform_create(self,serializer):
         serializer.save(uid = self.request.email)
 
