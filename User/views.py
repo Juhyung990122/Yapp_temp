@@ -76,3 +76,10 @@ def rank_update(request):
     serializer = MgmtUserSerializer(user_info)
     serializer.rank_save(user_info)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def level_update(request,pk):
+    user_info = CustomUser.objects.get(id = pk)
+    serializer = UserSerializer(user_info)
+    serializer.level_save(user_info)
+    return Response(serializer.data,status = status.HTTP_202_ACCEPTED)

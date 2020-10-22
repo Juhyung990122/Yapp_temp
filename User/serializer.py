@@ -42,6 +42,11 @@ class MgmtUserSerializer(serializers.ModelSerializer):
             user.rank = rank_list[user_idx][0]   
             user_idx += 1
             user.save()
+            
+    def level_save(self,user_info):
+        #기준 정확하게 정해지면 추가
+        user_info.level += 1
+        user_info.save()
         
 
 class FeedSerializer(serializers.ModelSerializer):
