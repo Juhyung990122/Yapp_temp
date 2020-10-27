@@ -3,6 +3,8 @@ from django.contrib.auth.models import User,AbstractUser
 from django.contrib import auth
 from django.conf import settings
 from Quest.models import Quest
+from django.db.models import CharField, Model
+from django_mysql.models import ListCharField
 
 
 class MgmtUser(AbstractUser):
@@ -22,6 +24,12 @@ class Feed(models.Model):
     title = models.CharField(max_length=300)
     date = models.DateTimeField(auto_now_add=True)  
     photo = models.ImageField()
+    report_uidList = ListCharField(
+        base_field=CharField(max_length=10),
+        size=6,
+        max_length=(6 * 11),
+        default = []
+    )
 
 class QuestList(models.Model):
     uid = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
