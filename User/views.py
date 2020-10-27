@@ -55,12 +55,18 @@ class FeedViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def report_feed(self,request, pk, *args, **kwargs):
         feed_info = self.get_object()
-        feed_info.report_feed_cnt += 1
-        self.perform_update(feed_info)
+        report_user = MgmtUser.objects.get(id=request.user.id)
 
-        if feed_info.report_feed_cnt >= 3: 
-            self.perform_destroy(feed_info)
-            return Response(status = status.HTTP_202_ACCEPTED)
+        #중복방지
+        if str(report_user.id) not in feed_info.report_uidList: 
+            feed_info.report_uidList.append(report_user.id)
+            self.perform_update(feed_info)
+            #3번째 신고면 삭제
+            if len(feed_info.report_uidList) >= 3: 
+                self.perform_destroy(feed_info)
+                return Response(status = status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status = status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self,serializer):
         serializer.save(uid = self.request.email)
