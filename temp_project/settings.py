@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'fcm_django',
     'django_mysql',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,8 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = "User.MgmtUser"
 
 PUSH_NOTIFICATIONS_SETTINGS = hide_settings.FCM_DJANGO_SETTINGS
+
+CRONJOBS = [
+    # 매일 0시 0분 미접속자 판별 ( N-> D )
+    ('0 0 * * *', 'User.cron.check_dormant'),
+]
