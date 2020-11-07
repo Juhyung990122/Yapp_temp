@@ -12,9 +12,14 @@ class MgmtUserViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs): 
         nickname = request.data.get('nickname') 
-        user_info  = self.get_object() #id로 들어온 객체 받아와서
-        user_info.nickname = nickname #닉네임 저장
-        self.perform_update(user_info) #객체 업데이트
+        users = MgmtUser.objects.all()
+        for user in users:
+            if user.nickname == nickname:
+                return Response(status=status.HTTP_409_CONFLICT)
+ 
+        user_info  = self.get_object()
+        user_info.nickname = nickname 
+        self.perform_update(user_info) 
         return Response(status=status.HTTP_201_CREATED)
 
     #lastlogined 갱신(앱실행시 호출)
