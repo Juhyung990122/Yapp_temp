@@ -130,5 +130,7 @@ PUSH_NOTIFICATIONS_SETTINGS = hide_settings.FCM_DJANGO_SETTINGS
 
 CRONJOBS = [
     # 매일 0시 0분 미접속자 판별 ( N-> D )
-    ('0 0 * * *', 'User.cron.check_dormant'),
+    #('0 0 * * *', 'User.cron.check_dormant'),
+    # ('0 0 * 1 *', 'users.cron.monthly_stats'),
+    # ('0 0 * * 1', 'users.cron.weekly_stats'),
 ]
