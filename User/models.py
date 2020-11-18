@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User,AbstractUser
 from django.contrib import auth
 from django.conf import settings
+from django_resized import ResizedImageField
 from Quest.models import Quest
 from django.db.models import CharField, Model
 from django_mysql.models import ListCharField
@@ -23,7 +24,7 @@ class Feed(models.Model):
     uid = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
     title = models.CharField(max_length=300)
     date = models.DateTimeField(auto_now_add=True)  
-    photo = models.ImageField()
+    photo = ResizedImageField(size=[300,300],upload_to='',force_format='JPEG',quality=95)
     report_uidList = ListCharField(
         base_field=CharField(max_length=10),
         size=6,
