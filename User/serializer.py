@@ -43,10 +43,10 @@ class MgmtUserSerializer(serializers.ModelSerializer):
             user.save()
             
     def level_save(self,user_info):
-        #기준 정확하게 정해지면 추가
-        user_info.level += 1
-        user_info.save()
-        
+        if user_info.experience >= 5:
+            user_info.level += 1
+            user_info.experience = 0
+            user_info.save()
 
 class FeedSerializer(serializers.ModelSerializer):
     class Meta:

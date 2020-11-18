@@ -48,7 +48,19 @@ class MgmtUserViewSet(viewsets.ModelViewSet):
 class FeedViewSet(viewsets.ModelViewSet):
     queryset = Feed.objects.all()
     serializer_class = FeedSerializer
-
+    
+    def create(self,request):
+        serializer = self.get_serializer(data=request.data)
+        #피드 등록시 경험치 1증가
+        user = CustomUser.objects.get(id=request.data.get(
+            'uid',''
+        ))
+        user.experience += 1
+        user.save()
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     #신고기능_피드
     @action(detail=True, methods=['get'])
     def report_feed(self,request, pk, *args, **kwargs):
