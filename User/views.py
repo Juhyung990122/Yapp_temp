@@ -7,6 +7,7 @@ from .models import MgmtUser,Feed,QuestList
 import datetime
 
 class MgmtUserViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get','put','delete','head']
     queryset = MgmtUser.objects.all()
     serializer_class = MgmtUserSerializer
 
@@ -99,3 +100,21 @@ def level_update(request,pk):
     serializer = MgmtUserSerializer(user_info)
     serializer.level_save(user_info)
     return Response(serializer.data,status = status.HTTP_202_ACCEPTED)
+
+
+@api_view(['POST'])
+def see_others_feed(request,self):
+    '''
+                피드 리스트 출력
+                (토큰 필요)
+                ---
+                request 한 유저가 작성한 피드를 보여줍니다.
+    '''
+    print(request.data)
+    queryset = Feed.objects.filter(uid=request.data.get("id"))
+    page = self.paginate_queryset(queryset)
+    if page is not None:
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
+    serializer = self.get_serializer(queryset, many=True)
+    return Response(serializer.data)
