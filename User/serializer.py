@@ -3,6 +3,11 @@ from rest_framework import serializers
 from .models import QuestList
 from rest_framework.fields import CurrentUserDefault
 
+class UserjoinSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MgmtUser
+        fields = ['level','rank']
+
 class MgmtUserSerializer(serializers.ModelSerializer):
     '''
     - 기본제공 필드(필요한것만 걸러쓰기)
@@ -52,6 +57,11 @@ class FeedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feed
         fields = '__all__'
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['user'] = UserjoinSerializer(instance.uid).data
+        return response
 
 class QuestListSerializer(serializers.ModelSerializer):
     class Meta:
