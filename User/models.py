@@ -11,7 +11,7 @@ from django_mysql.models import ListCharField
 class MgmtUser(AbstractUser):
     nickname = models.CharField(max_length = 100)
     level = models.IntegerField(default = 1)
-    rank = models.FloatField(default = 0.0)
+    rank = models.FloatField(default = 100.0)
     registeredDate = models.DateTimeField(auto_now_add=True)  
     STATE = (
         ('N' , 'Normal'),
