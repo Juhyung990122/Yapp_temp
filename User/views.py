@@ -81,6 +81,29 @@ class FeedViewSet(viewsets.ModelViewSet):
 
     def perform_create(self,serializer):
         serializer.save(uid = self.request.email)
+    
+    #ERROR FORMAT 처리 필요
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = CustomUser.objects.get(id=instance.uid.id)
+        user.experience -= 1
+        user.save()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT) 
+
+    @action(detail=False, methods=['post'],url_path='others_feed', url_name='others_feed')
+    def others_feed(self,request):
+        '''
+                    타 유저 피드 리스트 출력
+                    (토큰 필요)
+                    ---
+                    id값을 json 으로 보내면 해당 id값을 가진 유저의 피드를 보여줍니다.
+        '''
+        serializer = self.get_serializer(data=request.data)
+        queryset = Feed.objects.filter(uid=request.data.get("id"))
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+         
 
 class QuestListViewSet(viewsets.ModelViewSet):
     queryset = QuestList.objects.all()
