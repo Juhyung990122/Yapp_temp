@@ -2,6 +2,7 @@ from User import views
 from User.models import MgmtUser,Feed
 import datetime
 from dateutil.relativedelta import relativedelta
+from collections import Counter
 def check_dormant():
     users =MgmtUser.objects.all()
     for user in users:
@@ -24,11 +25,18 @@ def monthly_stats():
 
 def weekly_stats():
     week = ['월','화','수','목','금','토','일']
-    startday = datetime.datetime.now() - relativedelta(weeks=1)
+    startday = datetime.datetime.now() - datetime.timedelta(weeks=1)
     endday = datetime.datetime.now()
+    all_users = list(MgmtUser.objects.all().values_list('id',flat=True))
     feeds = Feed.objects.filter(date__range=[startday,endday]).values_list('uid',flat=True).distinct()
     for i in feeds:
         user = MgmtUser.objects.get(id = int(i))
-        best = Feed.objects.filter(uid = int(i)).order_by('-time')[0]
-        user.weekly_stats = week[best.date.weekday()]
+        best = Feed.objects.filter(date__range=[startday,endday],uid = int(i)).values_list('date')
+        best = Counter(best).most_common(1)[0][0][0]
+        all_users.remove(i)
+        user.weekly_stats = week[best.weekday()]
+        user.save()
+    for j in all_users:
+        user = MgmtUser.objects.get(id = int(j))
+        user.weekly_stats = '-'
         user.save()
